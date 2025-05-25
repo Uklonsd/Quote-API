@@ -1,5 +1,5 @@
 import pytest
-from app.app import app, QUETOS
+from app.app import app, QUOTES
 
 @pytest.fixture
 def client():
@@ -23,7 +23,7 @@ def test_quote_structure(client):
 
 def test_quote_validity(client):
   response = client.get('/quote')
-  data = response.get_json
+  data = response.get_json()
   author = data['author']
   assert author in QUOTES
   assert data['quote'] == QUOTES[author]['quote']

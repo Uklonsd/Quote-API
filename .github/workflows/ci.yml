@@ -10,6 +10,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+
+    env:
+      PYTHONPATH: ./app
+
     steps:
       - name: Check repository
         uses: actions/checkout@v3
@@ -26,7 +30,7 @@ jobs:
           pip install pytest
 
       - name: Run tests
-        run: pytest
+        run: python -m pytest test/
 
       - name: Build Docker image
         run: docker build -t quote-app .
