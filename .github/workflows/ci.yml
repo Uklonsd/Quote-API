@@ -45,3 +45,5 @@ jobs:
         run: |
           docker tag ${{ secrets.DOCKER_USERNAME }}/quote-app:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/quote-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/quote-app:latest
+
+          
