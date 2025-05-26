@@ -27,12 +27,17 @@
       font-size: 1rem;
       cursor: pointer;
       border: none;
+      margin: 0.5rem;
       background-color: #007bff;
       color: white;
       border-radius: 5px;
     }
     button:hover {
       background-color: #0056b3;
+    }
+    #like-info {
+      font-weight: bold;
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -41,18 +46,36 @@
   <img id="author-img" src="" alt="Фото автора">
   <blockquote id="quote-text"></blockquote>
   <p><strong id="author-name"></strong></p>
+
   <button onclick="loadQuote()">Ще одну цитату</button>
+  <button onclick="likeCurrent()">❤️ Лайк</button>
+
+  <p id="like-info"></p>
 
   <script>
+    let currentQuoteId = null;
+
     async function loadQuote() {
       const res = await fetch('/quote');
       const data = await res.json();
+      currentQuoteId = data.id;
       document.getElementById('quote-text').textContent = `“${data.quote}”`;
       document.getElementById('author-name').textContent = `— ${data.author}`;
       document.getElementById('author-img').src = data.image;
+      document.getElementById('like-info').textContent = '';
     }
 
-    // завантаження при старті
+    async function likeCurrent() {
+      if (!currentQuoteId) return;
+      const res = await fetch(`/like/${currentQuoteId}`, { method: 'POST' });
+      const data = await res.json();
+      if (data.status === "ok") {
+        document.getElementById('like-info').textContent = `❤️ Лайків: ${data.likes}`;
+      } else {
+        document.getElementById('like-info').textContent = '🚫 Помилка лайку.';
+      }
+    }
+
     loadQuote();
   </script>
 </body>

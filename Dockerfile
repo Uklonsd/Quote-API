@@ -10,4 +10,7 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["python", "app/app.py"]
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+CMD ["sh", "-c", "python scripts/init_db.py && python app/app.py"]
