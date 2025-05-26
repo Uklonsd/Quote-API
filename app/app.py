@@ -2,7 +2,7 @@ from flask import Flask, jsonify, send_from_directory
 import os
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from models import Quote
+from app.models import Quote
 
 
 app = Flask(__name__)
