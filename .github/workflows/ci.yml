@@ -12,7 +12,7 @@ jobs:
 
     env:
       PYTHONPATH: .
-      VERSION: 1.${{ github.run_number }}
+      VERSION: v.1.${{ github.run_number }}
 
     steps:
       - name: Checkout repository

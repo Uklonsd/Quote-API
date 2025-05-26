@@ -13,4 +13,4 @@ EXPOSE 5000
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-CMD ["sh", "-c", "python scripts/init_db.py && python app/app.py"]
+CMD ["sh", "-c", "python scripts/init_db.py && python app/main.py"]
