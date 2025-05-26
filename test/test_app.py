@@ -1,5 +1,8 @@
 import pytest
-from app.app import app, QUOTES
+from app.app import app
+from app.models import Quote
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 @pytest.fixture
 def client():
@@ -24,9 +27,11 @@ def test_quote_structure(client):
 def test_quote_validity(client):
   response = client.get('/quote')
   data = response.get_json()
-  author = data['author']
-  assert author in QUOTES
-  assert data['quote'] == QUOTES[author]['quote']
-  if 'image' in QUOTES[author]:
-    assert data['image'] == QUOTES[author]['image']
+  engine = create_engine('sqlite:///quotes.db')
+  Session = sessionmaker(bind=engine)
+  session = Session()
 
+  quote = session.get(Quote, data['id'])
+  assert quote is not None
+  assert quote.quote == data['quote']
+  assert quote.image == data['image']
